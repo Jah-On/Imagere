@@ -1,0 +1,4 @@
+dearpygui==2.1.1
+fpdf2==2.8.5
+opencv-python==4.12.0.88
+qrcode==8.2
