@@ -6,13 +6,8 @@ import Generate
 import GUI
 
 def main():
-    Generate.distortion_map(
-        checkerSize=10
-    )
-    Generate.reference_grid(
-        lineSpacing=20, 
-        codeGapCount=3
-    )
+    Generate.distortion_map()
+    Generate.reference_grid()
 
     # image = numpy.array(qrcode.make("COLD_JUNGLE", border=1).get_image().convert("L"))
     # print(image)
