@@ -19,7 +19,7 @@ def dotsToMM(point: tuple):
 
 def distortion_map(
     pageFormat = "a4",
-    checkerSize = 10,
+    checkerSize = 20,
     outputPath = "./distortion_map.pdf"
 ):
     (pageWidth, pageHeight) = dotsToMM(pdf.PAGE_FORMATS[pageFormat])
@@ -43,11 +43,11 @@ def distortion_map(
 
     doc.output(outputPath)
 
-def reference_grid(
+def reference_sheet(
     pageFormat = "a4",
-    lineSpacing = 10,
-    codeGapCount = 5,
-    outputPath = "./reference_grid.pdf"
+    lineSpacing = 20,
+    codeGapCount = 3,
+    outputPath = "./reference_sheet.pdf"
 ):
     (pageWidth, pageHeight) = dotsToMM(pdf.PAGE_FORMATS[pageFormat])
 
@@ -55,18 +55,18 @@ def reference_grid(
 
     doc.add_page(format=pageFormat)
 
-    for x in range(lineSpacing, round(pageWidth), lineSpacing):
-        doc.line(x1=x, y1=0, x2=x, y2=pageHeight)
+    # for x in range(lineSpacing, round(pageWidth), lineSpacing):
+    #     doc.line(x1=x, y1=0, x2=x, y2=pageHeight)
 
-    for y in range(lineSpacing, round(pageHeight), lineSpacing):
-        doc.line(x1=0, y1=y, x2=pageWidth, y2=y)
+    # for y in range(lineSpacing, round(pageHeight), lineSpacing):
+    #     doc.line(x1=0, y1=y, x2=pageWidth, y2=y)
 
-    qcSize     = lineSpacing - 1
+    qcSize     = lineSpacing # - 1
 
     gap        = codeGapCount * lineSpacing
-    leadingGap = gap + 0.5
-    xBackGap   = math.floor(pageWidth/lineSpacing)*lineSpacing - gap + 0.5
-    yBackGap   = math.floor(pageHeight/lineSpacing)*lineSpacing - gap + 0.5
+    leadingGap = gap # + 0.5
+    xBackGap   = math.floor(pageWidth/lineSpacing)*lineSpacing - gap # + 0.5
+    yBackGap   = math.floor(pageHeight/lineSpacing)*lineSpacing - gap # + 0.5
 
     # Quadrant 2
     qrCode = qrcode.make(QUADRANT_CODES[1], border=0).get_image()
@@ -89,3 +89,9 @@ def reference_grid(
     doc.image(qrCode, xBackGap, yBackGap, qcSize, qcSize)
 
     doc.output(outputPath)
+
+def exportQRCodes():
+    for code in QUADRANT_CODES:
+        qrCode = qrcode.make(code, border=0).get_image()
+
+        qrCode.save(f"{code}.jpg")
